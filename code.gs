@@ -142,6 +142,10 @@ function sendLineMessage(message) {
 }
 
 function checkCalendarAndNotify() {
+    // ===== キャッシュクリア（毎朝リセット）=====
+  CacheService.getScriptCache().remove('weather_data');
+  CacheService.getScriptCache().remove('news_data_v2');
+  
   var today = new Date();
   var tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
@@ -298,4 +302,9 @@ function testReservationNotify() {
     '📝 ご要望：なし\n\n' +
     '⏰ 受付時刻：2026/04/09 10:30:00'
   );
+}
+function testWeather() {
+  const result = getWeather();
+  Logger.log('天気結果：' + result);
+  sendLineMessage(result);
 }
